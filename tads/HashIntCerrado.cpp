@@ -1,68 +1,58 @@
-#ifndef LIST_IMP
-#define LIST_IMP
+#include "HashIntCerrado.h"
 
-#include "List.h"
-#include <cassert>
-class HashInt
-{
-private:
-    int *hash;
-    int size;
-    int maxSize;
-    int (*fHash)(int);
-public:
-    HashInt(int maxSize, int (*fHash)(int))
-    {
-        this->maxSize = maxSize;
-        this->fHash = fHash;
-        hash = new int[maxSize];
-        for (int i = 0; i < maxSize; i++)
-        {
-            hash[i] = 0;
-        }
-        size = 0;
+HashInt::HashInt(int maxSize, int (*fHash)(int)) {
+    this->maxSize = maxSize;
+    this->fHash = fHash;
+    this->size = 0;
+    this->hash = new int[maxSize];
+    for (int i = 0; i < maxSize; i++) {
+        hash[i] = 0;
     }
-    ~HashInt();
-    void insert(int element){
-        int index = fHash(element) % maxSize;
-        if (hash[index] == 0)
-        {
-            size++;
-        }
-        hash[index] = element;
+}
+
+HashInt::~HashInt() {
+    delete[] hash;
+}
+
+int HashInt::indexOf(int element) const {
+    int idx = fHash(element) % maxSize;
+    if (idx < 0) idx += maxSize;
+    return idx;
+}
+
+void HashInt::insert(int element) {
+    int idx = indexOf(element);
+    hash[idx]++;
+    size++;
+}
+
+void HashInt::remove(int element) {
+    int idx = indexOf(element);
+    size -= hash[idx];
+    hash[idx] = 0;
+}
+
+bool HashInt::isEmpty() {
+    return size == 0;
+}
+
+int HashInt::count(int element) const {
+    int idx = indexOf(element);
+    return hash[idx];
+}
+
+bool HashInt::contains(int element) {
+    return count(element) > 0;
+}
+
+void HashInt::addOne(int element) {
+    insert(element);
+}
+
+void HashInt::removeOne(int element) {
+    int idx = indexOf(element);
+    if (hash[idx] > 0) {
+        hash[idx]--;
+        size--;
     }
-    void remove(int element){
-        int index = fHash(element) % maxSize;
-        if (hash[index] != 0)
-        {
-            size--;
-        }
-        hash[index] = 0;
-    }
-    bool isEmpty()
-    {
-        return size == 0;
-    }
-    bool contains(int element)
-    {
-        int index = fHash(element) % maxSize;
-        return hash[index] == element;
-    }
-    
-    void addOne(int element)
-    {
-        int index = fHash(element) % maxSize;
-        if (hash[index] != 0)
-        {
-            hash[index]++;
-        }
-    }
-    void removeOne(int element)
-    {
-        int index = fHash(element) % maxSize;
-        if (hash[index] != 0)
-        {
-            hash[index]--;
-        }
-    }
-};
+}

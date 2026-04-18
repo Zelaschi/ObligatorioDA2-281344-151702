@@ -1,29 +1,28 @@
-#ifndef HashIntCerrado_H
-#define HashIntCerrado_H
+#ifndef HASH_INT_CERRADO_H
+#define HASH_INT_CERRADO_H
 
-class HashInt
-{public:
-    // pre: -
-    // post: the element is inserted in the hash
-    virtual void insert(int element) = 0;
+class HashInt {
+private:
+    int* hash;
+    int maxSize;
+    int size;
+    int (*fHash)(int);
 
-    // pre: -
-    // post: remove the element that is equal to the given element
-    virtual void remove(int element) = 0;
+    int indexOf(int element) const;
 
-    // pre: -
-    // post: returns if the hash is empty
-    virtual bool isEmpty() = 0;
+public:
+    HashInt(int maxSize, int (*fHash)(int));
+    ~HashInt();
 
-    // pre: -
-    // post: returns if the hash contains the given element
-    virtual bool contains(int element) = 0;
-    
-    //pre: -
-    //post: add one to the element in the hash
-    virtual void addOne(int element) = 0;
+    void insert(int element);   // Inserta una ocurrencia (multiset)
+    void remove(int element);   // Elimina todas las ocurrencias
+    bool isEmpty();
+    bool contains(int element);
 
-    //pre: -
-    //post: remove one from the element in the hash
-    virtual void removeOne(int element) = 0;
+    void addOne(int element);   // +1 ocurrencia
+    void removeOne(int element);// -1 ocurrencia (si existe)
+
+    int count(int element) const;
 };
+
+#endif
