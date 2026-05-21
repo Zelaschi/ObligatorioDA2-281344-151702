@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <limits>
-#include "tads/HashStringCerrado.cpp"
+#include "tads/HashStringCerrado.h"
 using namespace std;
 
 struct Ronda {
@@ -17,7 +17,7 @@ int main() {
 
     Ronda* rondas = new Ronda[n];
 
-    TablaHashCerrada_Agenda puntajesFinales(n * 2 + 1);
+    TablaHashCerrada puntajesFinales(n * 2 + 1);
 
     for (int i = 0; i < n; i++) {
         cin >> rondas[i].nombre >> rondas[i].puntaje;
@@ -27,7 +27,7 @@ int main() {
 
     int maximoFinal = puntajesFinales.obtenerMaximo();
 
-    TablaHashCerrada_Agenda puntajesParciales(n * 2 + 1);
+    TablaHashCerrada puntajesParciales(n * 2 + 1);
 
     for (int i = 0; i < n; i++) {
         string nombre = rondas[i].nombre;
