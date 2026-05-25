@@ -3,7 +3,7 @@
 #include <iostream>
 #include <limits>
 #include "tads/HashStringCerrado.h"
-#include "tads/DijkstraPlanetario.h"
+#include "tads/Grafo.h"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ int main() {
     cin >> n >> m;
 
     TablaHashCerrada indices(n * 2 + 1);
-    GrafoDijkstra grafo(n);
+    Grafo grafo(n);
     int proximoIndice = 1;
 
     for (int i = 0; i < m; i++) {
@@ -36,7 +36,7 @@ int main() {
         int indiceA = obtenerIndicePlaneta(indices, planetaA, proximoIndice);
         int indiceB = obtenerIndicePlaneta(indices, planetaB, proximoIndice);
 
-        grafo.insertarAristaBidireccional(indiceA, indiceB, costo);
+        grafo.agregarArista(indiceA, indiceB, costo);
     }
 
     string origen, destino;

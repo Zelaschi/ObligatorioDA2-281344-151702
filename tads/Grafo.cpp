@@ -1,5 +1,9 @@
 #include "Grafo.h"
 
+#include <climits>
+
+#include "minHeap.cpp"
+
 Grafo::Grafo(int cantidadVertices) {
     this->cantidadVertices = cantidadVertices;
     this->adyacentes = new Nodo*[cantidadVertices + 1];
@@ -23,16 +27,84 @@ Grafo::~Grafo() {
     delete[] adyacentes;
 }
 
-void Grafo::agregarAdyacente(int origen, int destino) {
+void Grafo::agregarAdyacente(int origen, int destino, int peso) {
     Nodo* nuevo = new Nodo;
     nuevo->destino = destino;
+    nuevo->peso = peso;
     nuevo->siguiente = adyacentes[origen];
     adyacentes[origen] = nuevo;
 }
 
-void Grafo::agregarArista(int origen, int destino) {
-    agregarAdyacente(origen, destino);
-    agregarAdyacente(destino, origen);
+int Grafo::getCantidadVertices() {
+    return cantidadVertices;
+}
+
+Grafo::Nodo* Grafo::obtenerAdyacentes(int vertice) {
+    return adyacentes[vertice];
+}
+
+void Grafo::agregarArista(int origen, int destino, int peso) {
+    agregarAdyacente(origen, destino, peso);
+    agregarAdyacente(destino, origen, peso);
+}
+
+long long Grafo::costoMinimo(int origen, int destino) {
+    int vertices = cantidadVertices;
+    const long long INF = LLONG_MAX;
+
+    long long* costos = new long long[vertices + 1];
+    bool* visitados = new bool[vertices + 1]();
+
+    for (int i = 1; i <= vertices; i++) {
+        costos[i] = INF;
+    }
+
+    minHeap* heap = new minHeap(vertices * 2 + 1);
+
+    costos[origen] = 0;
+    heap->insertar(origen, 0);
+
+    while (!heap->estaVacio()) {
+        NodoHeap nodo = heap->tope();
+        heap->eliminar();
+
+        int verticeActual = nodo.vertice;
+
+        if (!visitados[verticeActual]) {
+            visitados[verticeActual] = true;
+
+            if (verticeActual == destino) {
+                break;
+            }
+
+            Nodo* adyacentes = this->adyacentes[verticeActual];
+
+            while (adyacentes != 0) {
+                int verticeAdy = adyacentes->destino;
+                int peso = adyacentes->peso;
+
+                if (!visitados[verticeAdy] && costos[verticeActual] != INF &&
+                    costos[verticeAdy] > costos[verticeActual] + peso) {
+                    costos[verticeAdy] = costos[verticeActual] + peso;
+                    heap->insertar(verticeAdy, costos[verticeAdy]);
+                }
+
+                adyacentes = adyacentes->siguiente;
+            }
+        }
+    }
+
+    long long resultado = costos[destino];
+
+    delete heap;
+    delete[] costos;
+    delete[] visitados;
+
+    if (resultado == INF) {
+        return -1;
+    }
+
+    return resultado;
 }
 
 bool Grafo::esBipartito() {
