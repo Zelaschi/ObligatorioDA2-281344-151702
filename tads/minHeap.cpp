@@ -1,7 +1,6 @@
 #ifndef MINHEAPDIJKSTRA
 #define MINHEAPDIJKSTRA
 
-#include <cassert>
 #include <iostream>
 using namespace std;
 
@@ -122,7 +121,9 @@ public:
     }
 
     void eliminar(){
-        assert(!estaVacio());
+        if(estaVacio()){
+            return;
+        }
 
         this->vec[1] = this->vec[primeroLibre - 1];
         this->primeroLibre--;
@@ -130,7 +131,10 @@ public:
     }
 
     NodoHeap tope(){
-        assert(this->primeroLibre > 1);
+        if(this->primeroLibre == 1){
+            return NodoHeap();
+        }
+
         return this->vec[1];
     }
 

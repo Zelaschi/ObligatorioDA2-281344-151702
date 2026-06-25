@@ -1,5 +1,4 @@
 #include "HashStringCerrado.h"
-#include <climits>
 
 Asociacion::Asociacion(string unaClave, long long unValor)
     : clave(unaClave), valor(unValor) {}
@@ -157,7 +156,7 @@ int TablaHashCerrada::obtener(string clave) {
 }
 
 int TablaHashCerrada::obtenerMaximo() {
-    int maximo = INT_MIN;
+    int maximo = -2147483647 - 1;
 
     for (int i = 0; i < tamanio; i++) {
         if (array[i] != NULL && array[i]->valor > maximo) {

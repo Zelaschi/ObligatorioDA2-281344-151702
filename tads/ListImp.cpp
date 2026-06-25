@@ -2,7 +2,6 @@
 #define LIST_IMP
 
 #include "List.h"
-#include <cassert>
 
 template <class T>
 class ListImp : public List<T>
@@ -43,7 +42,11 @@ public:
 
     void insertAt(int index, T element)
     {
-        assert(index >= 0 && index < size);
+        if (index < 0 || index > size)
+        {
+            return;
+        }
+
         Node *newNode = new Node(element, NULL, NULL);
         if (index == 0)
         {
@@ -111,7 +114,11 @@ public:
 
     void removeAt(int index)
     {
-        assert(index >= 0 && index < size);
+        if (index < 0 || index >= size)
+        {
+            return;
+        }
+
         Node *current = head;
         for (int i = 0; i < index; i++)
         {
@@ -149,7 +156,11 @@ public:
 
     T get(int index)
     {
-        assert(index >= 0 && index < size);
+        if (index < 0 || index >= size)
+        {
+            return T();
+        }
+
         Node *current = head;
         for (int i = 0; i < index; i++)
         {

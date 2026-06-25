@@ -1,5 +1,6 @@
 #include <iostream>
 #include "tads/Grafo.h"
+#include "tads/Grafo.cpp"
 
 using namespace std;
 
