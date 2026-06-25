@@ -2,11 +2,11 @@
 
 using namespace std;
 
-bool esSolucion(long long cartas[], int n, long long objetivo) {
+bool esSolucion(int cartas[], int n, int objetivo) {
     return n == 1 && cartas[0] == objetivo;
 }
 
-bool movValido(long long a, long long b, int operacion) {
+bool movValido(int a, int b, int operacion) {
     if (operacion == 0) {
         return true;
     }
@@ -22,7 +22,7 @@ bool movValido(long long a, long long b, int operacion) {
     return b > 0 && a % b == 0;
 }
 
-long long calcularMovimiento(long long a, long long b, int operacion) {
+int calcularMovimiento(int a, int b, int operacion) {
     if (operacion == 0) {
         return a + b;
     }
@@ -38,8 +38,8 @@ long long calcularMovimiento(long long a, long long b, int operacion) {
     return a / b;
 }
 
-long long* crearNuevoArreglo(long long cartas[], int n, int posA, int posB, long long resultado) {
-    long long* nuevo = new long long[n - 1];
+int* crearNuevoArreglo(int cartas[], int n, int posA, int posB, int resultado) {
+    int* nuevo = new int[n - 1];
     int posNuevo = 0;
 
     for (int i = 0; i < n; i++) {
@@ -54,7 +54,7 @@ long long* crearNuevoArreglo(long long cartas[], int n, int posA, int posB, long
     return nuevo;
 }
 
-bool backtracking(long long cartas[], int n, long long objetivo) {
+bool backtracking(int cartas[], int n, int objetivo) {
     if (esSolucion(cartas, n, objetivo)) {
         return true;
     }
@@ -68,8 +68,8 @@ bool backtracking(long long cartas[], int n, long long objetivo) {
             if (i != j) {
                 for (int operacion = 0; operacion < 4; operacion++) {
                     if (movValido(cartas[i], cartas[j], operacion)) {
-                        long long resultado = calcularMovimiento(cartas[i], cartas[j], operacion);
-                        long long* nuevo = crearNuevoArreglo(cartas, n, i, j, resultado);
+                        int resultado = calcularMovimiento(cartas[i], cartas[j], operacion);
+                        int* nuevo = crearNuevoArreglo(cartas, n, i, j, resultado);
 
                         if (backtracking(nuevo, n - 1, objetivo)) {
                             delete[] nuevo;
@@ -90,13 +90,13 @@ int main() {
     int n;
     cin >> n;
 
-    long long* cartas = new long long[n];
+    int* cartas = new int[n];
 
     for (int i = 0; i < n; i++) {
         cin >> cartas[i];
     }
 
-    long long objetivo;
+    int objetivo;
     cin >> objetivo;
 
     if (backtracking(cartas, n, objetivo)) {
