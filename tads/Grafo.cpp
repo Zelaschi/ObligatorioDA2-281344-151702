@@ -1,7 +1,5 @@
 #include "Grafo.h"
 
-#include <climits>
-
 #include "minHeap.cpp"
 
 Grafo::Grafo(int cantidadVertices) {
@@ -50,7 +48,7 @@ void Grafo::agregarArista(int origen, int destino, int peso) {
 
 long long Grafo::costoMinimo(int origen, int destino) {
     int vertices = cantidadVertices;
-    const long long INF = LLONG_MAX;
+    const long long INF = 9223372036854775807LL;
 
     long long* costos = new long long[vertices + 1];
     bool* visitados = new bool[vertices + 1]();

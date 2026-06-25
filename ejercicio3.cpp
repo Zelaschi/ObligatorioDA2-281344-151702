@@ -1,5 +1,6 @@
 #include <iostream>
 #include "tads/ColaPriodidadPaciente.h"
+#include "tads/ColaPrioridadPaciente.cpp"
 
 using namespace std;
 

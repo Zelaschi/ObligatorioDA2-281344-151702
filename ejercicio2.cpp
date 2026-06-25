@@ -1,8 +1,7 @@
-#include <cassert>
 #include <string>
 #include <iostream>
-#include <limits>
 #include "tads/HashStringCerrado.h"
+#include "tads/HashStringCerrado.cpp"
 using namespace std;
 
 struct Ronda {

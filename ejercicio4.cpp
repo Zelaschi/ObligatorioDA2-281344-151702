@@ -1,9 +1,9 @@
-#include <cassert>
 #include <string>
 #include <iostream>
-#include <limits>
 #include "tads/HashStringCerrado.h"
 #include "tads/Grafo.h"
+#include "tads/HashStringCerrado.cpp"
+#include "tads/Grafo.cpp"
 
 using namespace std;
 

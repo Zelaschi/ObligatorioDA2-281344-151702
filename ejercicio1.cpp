@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "tads/HashIntCerrado.h"
+#include "tads/HashIntCerrado.cpp"
 
 using namespace std;
 
